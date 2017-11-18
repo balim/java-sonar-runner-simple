@@ -1,0 +1,60 @@
+apply plugin: 'java'
+apply plugin: 'org.sonarqube'
+
+
+allprojects {  
+  ext.baseVersion = "0.1"
+  ext.snapshotVersion = false
+  
+  group = "org.sonarqube"
+  version = "$baseVersion" + (snapshotVersion ? "-SNAPSHOT" : "")
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "Java :: Simple Project :: SonarQube Scanner for Gradle"
+        property "sonar.projectKey", "org.sonarqube:java-gradle-simple"
+
+ }
+}
+
+
+
+buildscript {
+    repositories { 
+      maven {
+        url "http://repo1.maven.org/maven2/"
+      }
+      maven {
+        url "https://plugins.gradle.org/m2/"
+      }
+      mavenLocal()
+    }
+
+
+  dependencies { 
+
+
+classpath 'org.sonarqube.gradle:gradle-sonarqube-plugin:1.0'
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.maven.apache.org/maven2" }
+	maven {url "https://plugins.gradle.org/m2/"}
+}
+
+repositories {
+
+    jcenter()
+}
+
+
+dependencies {
+
+    //compile 'org.slf4j:slf4j-api:1.7.12'
+	compile 'org.sonarsource.java:sonar-java-plugin:3.13.1'
+	compile 'org.sonarsource.sonarqube:sonar-scanner-engine:5.5-RC2'
+	testCompile 'junit:junit:4.12'
+}
